@@ -1,0 +1,101 @@
+<html>
+
+<head>
+  <title></title>
+  <style type="text/css">
+    body {
+      background-color: black;
+      font-family: Arial;
+    }
+
+    .main {
+      background-color: black;
+      position: relative;
+      display: flex;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 64px;
+      width: 100vw;
+    }
+
+    #search-container {
+      justify-content: flex-start;
+      align-items: center;
+      width: 100vw;
+      display: flex;
+    }
+
+    .dynamic {
+      display: flex;
+      color: #fff;
+
+      margin-left: 8px;
+      position: relative;
+    }
+
+    body {
+      background-color: black;
+      color: white;
+    }
+
+    .select {
+      display: flex;
+      justify-content: space-evenly;
+    }
+    .custom {
+      padding: 8px;
+    }
+
+    button {
+      padding: 8px;
+      height: 32px;
+      cursor: pointer;
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <div class="select">
+
+    <div class="custom select-algo">
+      <label for="cars">Choose an Algorithm:</label>
+
+      <select id="algo-options" onchange="algoChange()">
+        <option value="1">Bubble Sort</option>
+        <option value="2">Selection Sort</option>
+        <option value="3">Linear Search</option>
+        <option value="4">Binary Search</option>
+      </select>
+    </div>
+
+
+    <div class="custom  select-size">
+      <label for="fname">Array Size</label>
+      <input type="number" id="array-size" onchange="sizeChange()" value="5">
+    </div>
+
+    <div class="custom" id="search-element">
+      <label for="fname">Search Element</label>
+      <input type="number" id="search-box" disabled>
+    </div>
+
+
+
+
+    <div class="custom btn">
+      <button type="button" onclick="visualize()">Start Animation</button>
+    </div>
+  </div>
+
+
+
+  <div class="main" id="div"> </div>
+  <!-- <div  id="search-container"></div> -->
+  <script src="./script3.js"></script>
+</body>
+
+</html>

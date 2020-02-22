@@ -314,8 +314,8 @@ const searchBlock = async (source, target) => {
 createDive()
 // animation()
 
-// sort()
+sort()
 
  //selectionSort()
 
- linearSearch()
+ //linearSearch()
