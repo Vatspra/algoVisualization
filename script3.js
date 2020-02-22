@@ -234,6 +234,7 @@ const binarySearch = async (numberToSearch) => {
 
   let low = 0;
   let high = mainDiv.length - 1;
+  let itemFound = false;
   while (low <= high) {
     console.log(low, high)
     const mid = Math.floor((low + high) / 2);
@@ -246,6 +247,7 @@ const binarySearch = async (numberToSearch) => {
     if (val1 === val2) {
       div2.style.border = '1px solid green';
       div1.style.border = '1px solid green';
+      itemFound = true;
       break;
     } else {
       if (val2 < val1) {
@@ -260,6 +262,10 @@ const binarySearch = async (numberToSearch) => {
       div2.style.background = "black";
       div2.style.border = "1px solid white";
     }
+  }
+
+  if(!itemFound) {
+    alert('Item not found');
   }
 }
 
@@ -319,6 +325,7 @@ const algoChange = () => {
 
   if(parseInt(selectedAlgo) === 4) {
     searchElement.disabled = false;
+    searchElement.value = 5;
     const arraySize = document.getElementById('array-size').value;
     generateDivs(parseInt(arraySize), true);
   }
@@ -328,6 +335,10 @@ const algoChange = () => {
 
 const sizeChange = () => {
   const arraySize = document.getElementById('array-size').value;
+  const oldBlock = document.getElementsByClassName('searchElement')[0];
+  if(oldBlock) {
+    document.body.removeChild(oldBlock);
+  }
   generateDivs(parseInt(arraySize));
 }
 
@@ -335,30 +346,36 @@ const sizeChange = () => {
 
 
 
-const visualize = () => {
+const visualize = async () => {
   const selectedAlgo = document.getElementById('algo-options').value;
+
+  document.getElementById('btn').disabled = true;
+  document.getElementById('array-size').disabled = true;
 
   // genearte random array;
 
 
   if (parseInt(selectedAlgo) === 1) {
-    bubbleSort()
+    await bubbleSort()
   }
 
   if (parseInt(selectedAlgo) === 2) {
-    selectionSort();
+    await selectionSort();
   }
 
 
   if (parseInt(selectedAlgo) === 3) {
     let searchElement = document.getElementById('search-box').value
-    linearSearch(searchElement);
+    await linearSearch(searchElement);
   }
 
   if (parseInt(selectedAlgo) === 4) {
     let searchElement = document.getElementById('search-box').value
-    binarySearch(searchElement);
+    await binarySearch(searchElement);
   }
+
+  document.getElementById('btn').disabled = false;
+  document.getElementById('array-size').disabled = false;
 }
 
 
@@ -417,3 +434,5 @@ const genearteSearchDiv = (searchNumber, offseLeft) => {
   document.body.appendChild(d);
   return d;
 }
+
+
