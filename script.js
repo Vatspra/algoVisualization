@@ -1,8 +1,12 @@
-var div = document.getElementById('div');
+let div = document.getElementById('div');
+
+let timeOutIdMap = new Map();
 
 window.onload = () => {
   generateDivs()
 }
+
+
 
 
 
@@ -41,9 +45,12 @@ function moveBlock(div1, div2) {
       // console.log(j)
       if (div1.offsetLeft >= offset2 || div2.offsetLeft <= offset1) {
         clearInterval(id);
+        timeOutIdMap.delete(id);
         resolve(true)
       }
     }, 60);
+
+    timeOutIdMap.set(id, true);
   })
 }
 
@@ -53,12 +60,17 @@ const bubbleSort = async () => {
   let swapped = true;
   let div = document.getElementById('div').childNodes;
   const mainDiv = [];
+  let arr = [];
   div.forEach((res) => {
     if (res.className) {
       mainDiv.push(res.className);
+      arr.push(parseInt(res.innerText));
     }
   })
-  for (let j = 0; j < mainDiv.length; j++) {
+
+  generateRandomDiv(arr);
+  await delay(100);
+  while (swapped) {
     // let sortedDiv;
     // let index;
     swapped = false;
@@ -87,9 +99,6 @@ const bubbleSort = async () => {
       await delay()
     }
 
-    if (!swapped) {
-      break;
-    }
     // if (!swapped) {
     //   document.getElementsByClassName(mainDiv[index])[0].style.backgroundColor = "green";
     // } else {
@@ -104,20 +113,26 @@ const delay = async () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(true);
-    }, 200)
+    }, 100)
   })
 }
 
 
 const selectionSort = async () => {
-  console.log('hi')
   let div = document.getElementById('div').childNodes;
   const mainDiv = [];
+  let arr = [];
   div.forEach((res) => {
     if (res.className) {
       mainDiv.push(res.className);
+      arr.push(parseInt(res.innerText));
     }
   })
+
+  generateRandomDiv(arr);
+  await delay(100)
+
+
   for (let i = 0; i < mainDiv.length; i++) {
     //   for(let j = i; j<mainDiv.length; j++) {
     const min = await findMin(mainDiv, i);
@@ -129,10 +144,10 @@ const selectionSort = async () => {
     div2.style.border = '1px solid green';
     div1.style.border = '1px solid red';
 
-    // if(i !== min.index) {
+
     await moveBlock(div1, div2);
     await moveDivTop(div1, div2, 50);
-    // }
+
     div1.style.border = '1px solid white';
     div2.style.border = '1px solid green';
     const temp = mainDiv[min.index];
@@ -173,18 +188,23 @@ const findMin = async (arr, fromIndex) => {
 const linearSearch = async (numberToSearch) => {
   let divx = document.getElementById('div').childNodes;
   const mainDiv = [];
+  const arr = []
   divx.forEach((res) => {
     if (res.className) {
       mainDiv.push(res.className);
+      arr.push(parseInt(res.innerText));
     }
   });
+
+  generateRandomDiv(arr);
+  await delay(100);
 
   const firstDiv = document.getElementsByClassName(mainDiv[0])[0];
 
   const offseLeft = parseInt(firstDiv.offsetLeft);
   const div1 = genearteSearchDiv(numberToSearch, offseLeft)
 
-  
+
 
   // logic for search
 
@@ -218,7 +238,7 @@ const linearSearch = async (numberToSearch) => {
       await delay();
     }
   }
-  if(!itemFound) {
+  if (!itemFound) {
     alert('Item not found');
   }
 
@@ -227,11 +247,17 @@ const linearSearch = async (numberToSearch) => {
 const binarySearch = async (numberToSearch) => {
   let divx = document.getElementById('div').childNodes;
   const mainDiv = [];
+  let arr = [];
   divx.forEach((res) => {
     if (res.className) {
       mainDiv.push(res.className);
+      arr.push(parseInt(res.innerText));
     }
   });
+
+  generateRandomDiv(arr, true);
+  await delay(100);
+
   const firstDiv = document.getElementsByClassName(mainDiv[0])[0];
   const offseLeft = parseInt(firstDiv.offsetLeft);
   const div1 = genearteSearchDiv(numberToSearch, offseLeft)
@@ -269,7 +295,7 @@ const binarySearch = async (numberToSearch) => {
     }
   }
 
-  if(!itemFound) {
+  if (!itemFound) {
     alert('Item not found');
   }
 }
@@ -281,7 +307,7 @@ const searchBlock = async (source, target) => {
     let left1 = parseInt(source.style.left || 0);
     let j = 6;
     let id = setInterval(() => {
-      if (offset1 == parseInt(source.style.left)) {
+      if (offset1 === parseInt(source.style.left)) {
         clearInterval(id);
         resolve(true);
       } else if (offset1 > parseInt(source.style.left)) {
@@ -293,7 +319,7 @@ const searchBlock = async (source, target) => {
       j += 6;
 
 
-    }, 40)
+    }, 50)
   })
 }
 
@@ -324,19 +350,23 @@ const algoChange = () => {
   const selectedAlgo = document.getElementById('algo-options').value;
   const searchElement = document.getElementById('search-box');
   const oldBlock = document.getElementsByClassName('searchElement')[0];
-  if(oldBlock) {
+  const arraySize = document.getElementById('array-size').value;
+  if (oldBlock) {
     document.body.removeChild(oldBlock);
   }
   if (parseInt(selectedAlgo) === 3) {
     searchElement.disabled = false;
     searchElement.value = 5;
+    generateDivs(parseInt(arraySize), false);
   }
 
-  if(parseInt(selectedAlgo) === 4) {
+  else if (parseInt(selectedAlgo) === 4) {
     searchElement.disabled = false;
     searchElement.value = 5;
-    const arraySize = document.getElementById('array-size').value;
     generateDivs(parseInt(arraySize), true);
+  }
+  else {
+    generateDivs(parseInt(arraySize), false);
   }
 
 }
@@ -345,7 +375,7 @@ const algoChange = () => {
 const sizeChange = () => {
   const arraySize = document.getElementById('array-size').value;
   const oldBlock = document.getElementsByClassName('searchElement')[0];
-  if(oldBlock) {
+  if (oldBlock) {
     document.body.removeChild(oldBlock);
   }
   generateDivs(parseInt(arraySize));
@@ -360,6 +390,7 @@ const visualize = async () => {
 
   document.getElementById('btn').disabled = true;
   document.getElementById('array-size').disabled = true;
+  document.getElementById('algo-options').disabled = true;
 
   // genearte random array;
 
@@ -385,6 +416,7 @@ const visualize = async () => {
 
   document.getElementById('btn').disabled = false;
   document.getElementById('array-size').disabled = false;
+  document.getElementById('algo-options').disabled = false;
 }
 
 
@@ -395,8 +427,8 @@ const generateDivs = (size = 5, sorted = false) => {
     arr.push(randomNumber);
     size--;
   }
-  if(sorted){
-    arr.sort((a, b) => a- b);
+  if (sorted) {
+    arr.sort((a, b) => a - b);
   }
   generateRandomDiv(arr);
 }
@@ -425,7 +457,7 @@ const generateRandomDiv = (arr) => {
 
 const genearteSearchDiv = (searchNumber, offseLeft) => {
   const oldBlock = document.getElementsByClassName('searchElement')[0];
-  if(oldBlock) {
+  if (oldBlock) {
     document.body.removeChild(oldBlock);
   }
   let d = document.createElement('div');

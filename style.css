@@ -1,0 +1,50 @@
+body {
+    background-color: black;
+    font-family: Arial;
+}
+
+.main {
+    background-color: black;
+    position: relative;
+    display: flex;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 64px;
+    width: 100vw;
+}
+
+#search-container {
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
+    display: flex;
+}
+
+.dynamic {
+    display: flex;
+    color: #fff;
+    margin-left: 8px;
+    position: relative;
+}
+
+body {
+    background-color: black;
+    color: white;
+}
+
+.select {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.custom {
+    padding: 8px;
+}
+
+button {
+    padding: 8px;
+    height: 32px;
+    cursor: pointer;
+}
