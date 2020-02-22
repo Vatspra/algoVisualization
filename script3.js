@@ -189,6 +189,7 @@ const linearSearch = async (numberToSearch) => {
   // logic for search
 
   div1.style.border = "1px solid red";
+  let itemFound = false;
 
   for (let i = 0; i < mainDiv.length; i++) {
     //   for(let j = i; j<mainDiv.length; j++) {
@@ -205,6 +206,7 @@ const linearSearch = async (numberToSearch) => {
     if (val1 === val2) {
       div2.style.border = '1px solid green';
       div1.style.border = '1px solid green';
+      itemFound = true;
       break;
     } else {
       div1.style.background = "red";
@@ -215,6 +217,9 @@ const linearSearch = async (numberToSearch) => {
       div2.style.border = "1px solid white";
       await delay();
     }
+  }
+  if(!itemFound) {
+    alert('Item not found');
   }
 
 }
@@ -318,6 +323,10 @@ const moveDivTop = (div1, div2, distance) => {
 const algoChange = () => {
   const selectedAlgo = document.getElementById('algo-options').value;
   const searchElement = document.getElementById('search-box');
+  const oldBlock = document.getElementsByClassName('searchElement')[0];
+  if(oldBlock) {
+    document.body.removeChild(oldBlock);
+  }
   if (parseInt(selectedAlgo) === 3) {
     searchElement.disabled = false;
     searchElement.value = 5;
