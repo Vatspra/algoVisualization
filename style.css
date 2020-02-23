@@ -1,7 +1,7 @@
-body {
+/* body {
     background-color: black;
     font-family: Arial;
-}
+} */
 
 .main {
     background-color: black;
@@ -36,15 +36,47 @@ body {
 
 .select {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
 }
 
 .custom {
     padding: 8px;
+    margin: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 button {
-    padding: 8px;
-    height: 32px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+    font-family: Arial;
 }
