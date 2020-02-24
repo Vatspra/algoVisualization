@@ -2,8 +2,11 @@ let div = document.getElementById('div');
 
 let timeOutIdMap = new Map();
 
+let timeoutInMs = 1000;
+
 window.onload = () => {
-    generateDivs()
+    generateDivs();
+    speedChange();
 }
 
 
@@ -48,7 +51,7 @@ function moveBlock(div1, div2) {
                 timeOutIdMap.delete(id);
                 resolve(true)
             }
-        }, 60);
+        }, timeoutInMs);
 
         timeOutIdMap.set(id, true);
     })
@@ -322,7 +325,7 @@ const searchBlock = async(source, target) => {
             j += 6;
 
 
-        }, 50)
+        }, timeoutInMs)
     })
 }
 
@@ -342,7 +345,7 @@ const moveDivTop = (div1, div2, distance) => {
                 div2.style.top = top2 - top + 'px';
                 top += 5;
             }
-        }, 50)
+        }, timeoutInMs)
     })
 }
 
@@ -377,6 +380,11 @@ const sizeChange = () => {
         document.body.removeChild(oldBlock);
     }
     generateDivs(parseInt(arraySize));
+}
+
+const speedChange = () => {
+    speed = parseInt(document.getElementById('speed').value) || 10;
+    timeoutInMs = parseInt(Math.ceil(1000 / speed));
 }
 
 
